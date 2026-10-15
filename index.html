@@ -431,12 +431,53 @@
   precio += peajes;
   precio += ayudante;
 
-  // REDONDEAR HACIA ARRIBA A $5
-  precio = Math.ceil(precio / 5) * 5;
+// COSTOS REALES ESTIMADOS
+const costoVehiculo = kilometros * 0.25;
+const costos = costoVehiculo + peajes + ayudante;
 
-  document
-    .getElementById("precioRecomendado")
-    .textContent = "$" + precio.toFixed(2);
+// PRECIO RECOMENDADO
+precio = Math.ceil(precio / 5) * 5;
+
+// RANGOS DE PRECIO
+let precioMinimo = Math.ceil((precio * 0.85) / 5) * 5;
+let precioIdeal = Math.ceil((precio * 1.15) / 5) * 5;
+
+// GANANCIA
+let ganancia = precio - costos;
+let gananciaHora = tiempo > 0 ? ganancia / tiempo : ganancia;
+
+// MOSTRAR RESULTADOS
+document.getElementById("precioMinimo").textContent =
+  "$" + precioMinimo.toFixed(2);
+
+document.getElementById("precioRecomendado").textContent =
+  "$" + precio.toFixed(2);
+
+document.getElementById("precioIdeal").textContent =
+  "$" + precioIdeal.toFixed(2);
+
+document.getElementById("costosEstimados").textContent =
+  "$" + costos.toFixed(2);
+
+document.getElementById("gananciaEstimada").textContent =
+  "$" + ganancia.toFixed(2);
+
+document.getElementById("gananciaHora").textContent =
+  "$" + gananciaHora.toFixed(2) + "/h";
+
+// EVALUAR EL ACARREO
+let evaluacion = "";
+
+if (gananciaHora >= 20) {
+  evaluacion = "🟢 Buen negocio";
+} else if (gananciaHora >= 12) {
+  evaluacion = "🟡 Aceptable";
+} else {
+  evaluacion = "🔴 Poco rentable";
+}
+
+document.getElementById("evaluacionAcarreo").textContent =
+  evaluacion;
 
     document
     .getElementById("resultado")
