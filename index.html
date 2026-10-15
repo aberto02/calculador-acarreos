@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Calculador de Acarreos</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      color: #1f2937;
+    }
+
+    .app {
+      max-width: 600px;
+      margin: auto;
+      padding: 20px 16px 50px;
+    }
+
+    .encabezado {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .encabezado h1 {
+      margin-bottom: 6px;
+      color: #0f172a;
+    }
+
+    .encabezado p {
+      margin: 0;
+      color: #64748b;
+    }
+
+    .tarjeta {
+      background: white;
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    }
+
+    .tarjeta h2 {
+      margin-top: 0;
+      font-size: 18px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 14px;
+      margin-bottom: 6px;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      font-size: 16px;
+      background: white;
+    }
+
+    .fila {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    button {
+      width: 100%;
+      border: none;
+      border-radius: 12px;
+      padding: 16px;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .calcular {
+      background: #16a34a;
+      color: white;
+      margin-top: 8px;
+    }
+
+    .resultado {
+      text-align: center;
+    }
+
+    .precio {
+      font-size: 34px;
+      font-weight: bold;
+      color: #16a34a;
+      margin: 12px 0;
+    }
+
+    .oculto {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="app">
+
+    <header class="encabezado">
+      <h1>🚚 Calculador de Acarreos</h1>
+      <p>Calcula un precio más justo antes de aceptar el trabajo.</p>
+    </header>
+
+    <!-- RECORRIDO -->
+    <section class="tarjeta">
+
+      <h2>📍 1. Recorrido</h2>
+
+      <label for="origen">¿Desde dónde sales?</label>
+      <input
+        id="origen"
+        type="text"
+        placeholder="Ej. Tocumen"
+      >
+
+      <label for="recogida">¿Dónde recoges la carga?</label>
+      <input
+        id="recogida"
+        type="text"
+        placeholder="Ej. Condado del Rey"
+      >
+
+      <label for="destino">¿Dónde entregas?</label>
+      <input
+        id="destino"
+        type="text"
+        placeholder="Ej. Paitilla"
+      >
+
+      <label for="regreso">¿Regresas al punto de salida?</label>
+      <select id="regreso">
+        <option value="si">Sí</option>
+        <option value="no">No</option>
+      </select>
+
+    </section>
+
+
+    <!-- DISTANCIA Y TIEMPO -->
+    <section class="tarjeta">
+
+      <h2>🛣️ 2. Distancia y tiempo</h2>
+
+      <div class="fila">
+
+        <div>
+          <label for="kilometros">Kilómetros totales</label>
+          <input
+            id="kilometros"
+            type="number"
+            min="0"
+            step="0.1"
+            placeholder="Ej. 55"
+          >
+        </div>
+
+        <div>
+          <label for="tiempo">Tiempo total</label>
+          <input
+            id="tiempo"
+            type="number"
+            min="0"
+            step="0.5"
+            placeholder="Ej. 2"
+          >
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- CARGA -->
+    <section class="tarjeta">
+
+      <h2>📦 3. Carga</h2>
+
+      <label for="tipoCarga">¿Qué vas a transportar?</label>
+      <input
+        id="tipoCarga"
+        type="text"
+        placeholder="Ej. cajas, muebles, electrodomésticos"
+      >
+
+      <label for="cantidad">Cantidad aproximada</label>
+      <input
+        id="cantidad"
+        type="number"
+        min="1"
+        placeholder="Ej. 6"
+      >
+
+      <label for="peso">Peso de la carga</label>
+      <select id="peso">
+        <option value="ligera">Ligera</option>
+        <option value="media">Media</option>
+        <option value="pesada">Pesada</option>
+        <option value="muy-pesada">Muy pesada</option>
+      </select>
+
+    </section>
+
+
+    <!-- DIFICULTAD -->
+    <section class="tarjeta">
+
+      <h2>💪 4. Trabajo adicional</h2>
+
+      <label for="cargaConductor">
+        ¿Tú cargas y descargas?
+      </label>
+
+      <select id="cargaConductor">
+        <option value="no">No</option>
+        <option value="si">Sí</option>
+      </select>
+
+
+      <label for="distanciaCarga">
+        Distancia caminando con la carga
+      </label>
+
+      <select id="distanciaCarga">
+        <option value="corta">Menos de 10 metros</option>
+        <option value="media">10 a 50 metros</option>
+        <option value="larga">Más de 50 metros</option>
+      </select>
+
+
+      <label for="piso">
+        Piso de entrega
+      </label>
+
+      <input
+        id="piso"
+        type="number"
+        min="0"
+        placeholder="Ej. 11"
+      >
+
+
+      <label for="ascensor">
+        ¿Hay ascensor disponible?
+      </label>
+
+      <select id="ascensor">
+        <option value="si">Sí</option>
+        <option value="no">No</option>
+        <option value="no-aplica">No aplica</option>
+      </select>
+
+    </section>
+
+
+    <!-- GASTOS -->
+    <section class="tarjeta">
+
+      <h2>💵 5. Gastos adicionales</h2>
+
+      <label for="peajes">
+        Peajes / corredor
+      </label>
+
+      <input
+        id="peajes"
+        type="number"
+        min="0"
+        step="0.01"
+        placeholder="$0.00"
+      >
+
+
+      <label for="ayudante">
+        Pago de ayudante
+      </label>
+
+      <input
+        id="ayudante"
+        type="number"
+        min="0"
+        step="0.01"
+        placeholder="$0.00"
+      >
+
+    </section>
+
+
+    <button
+      class="calcular"
+      type="button"
+      onclick="calcularAcarreo()"
+    >
+      CALCULAR PRECIO
+    </button>
+
+
+    <!-- RESULTADO -->
+    <section
+      id="resultado"
+      class="tarjeta resultado oculto"
+    >
+
+      <h2>Precio recomendado</h2>
+
+      <div
+        id="precioRecomendado"
+        class="precio"
+      >
+        $0.00
+      </div>
+
+      <p>
+        Este resultado tendrá en cuenta recorrido,
+        tiempo, carga, dificultad y gastos.
+      </p>
+
+    </section>
+
+  </main>
+
+
+  <script>
+
+    function calcularAcarreo() {
+
+      /*
+        PRIMERA ETAPA:
+
+        Todavía NO colocaremos aquí
+        la fórmula definitiva del precio.
+
+        Primero construiremos y probaremos
+        toda la estructura del calculador.
+      */
+
+      document
+        .getElementById("resultado")
+        .classList.remove("oculto");
+
+      document
+        .getElementById("precioRecomendado")
+        .textContent = "Fórmula pendiente";
+
+    }
+
+  </script>
+
+</body>
+  </html>
