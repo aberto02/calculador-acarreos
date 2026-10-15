@@ -339,24 +339,89 @@
 
     function calcularAcarreo() {
 
-      /*
-        PRIMERA ETAPA:
+  const kilometros =
+    parseFloat(document.getElementById("kilometros").value) || 0;
 
-        Todavía NO colocaremos aquí
-        la fórmula definitiva del precio.
+  const tiempo =
+    parseFloat(document.getElementById("tiempo").value) || 0;
 
-        Primero construiremos y probaremos
-        toda la estructura del calculador.
-      */
+  const cantidad =
+    parseInt(document.getElementById("cantidad").value) || 0;
 
-      document
-        .getElementById("resultado")
-        .classList.remove("oculto");
+  const peso =
+    document.getElementById("peso").value;
 
-      document
-        .getElementById("precioRecomendado")
-        .textContent = "Fórmula pendiente";
+  const cargaConductor =
+    document.getElementById("cargaConductor").value;
 
+  const distanciaCarga =
+    document.getElementById("distanciaCarga").value;
+
+  const piso =
+    parseInt(document.getElementById("piso").value) || 0;
+
+  const ascensor =
+    document.getElementById("ascensor").value;
+
+  const peajes =
+    parseFloat(document.getElementById("peajes").value) || 0;
+
+  const ayudante =
+    parseFloat(document.getElementById("ayudante").value) || 0;
+
+
+  // BASE DEL SERVICIO
+  let precio = 15;
+
+  // RECORRIDO
+  precio += kilometros * 0.45;
+
+  // TIEMPO DE TRABAJO
+  precio += tiempo * 5;
+
+  // PESO
+  if (peso === "media") precio += 5;
+  if (peso === "pesada") precio += 10;
+  if (peso === "muy-pesada") precio += 20;
+
+  // CANTIDAD
+  if (cantidad > 5) precio += 5;
+  if (cantidad > 10) precio += 5;
+
+  // CARGA Y DESCARGA POR EL CONDUCTOR
+  if (cargaConductor === "si") {
+    precio += 10;
+  }
+
+  // DISTANCIA CAMINANDO CON LA CARGA
+  if (distanciaCarga === "media") precio += 5;
+  if (distanciaCarga === "larga") precio += 10;
+
+  // PISOS SIN ASCENSOR
+  if (piso > 0 && ascensor === "no") {
+    precio += piso * 2;
+  }
+
+  // GASTOS DIRECTOS
+  precio += peajes;
+  precio += ayudante;
+
+  // REDONDEAR HACIA ARRIBA A $5
+  precio = Math.ceil(precio / 5) * 5;
+
+  document
+    .getElementById("precioRecomendado")
+    .textContent = "$" + precio.toFixed(2);
+
+    document
+    .getElementById("resultado")
+    .classList.remove("oculto");
+
+  document
+    .getElementById("resultado")
+    .scrollIntoView({
+      behavior: "smooth"
+    });
     }
 
   </script>
