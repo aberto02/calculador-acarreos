@@ -468,10 +468,14 @@ document.getElementById("gananciaHora").textContent =
 // EVALUAR EL ACARREO
 let evaluacion = "";
 
-if (gananciaHora >= 20) {
+if (gananciaHora >= 25) {
+  evaluacion = "🟢 Excelente negocio";
+} else if (gananciaHora >= 18) {
   evaluacion = "🟢 Buen negocio";
 } else if (gananciaHora >= 12) {
   evaluacion = "🟡 Aceptable";
+} else if (gananciaHora >= 8) {
+  evaluacion = "🟠 Ganancia baja";
 } else {
   evaluacion = "🔴 Poco rentable";
 }
