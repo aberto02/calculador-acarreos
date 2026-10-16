@@ -123,25 +123,33 @@
       <h2>📍 1. Recorrido</h2>
 
       <label for="origen">¿Desde dónde sales?</label>
-      <input
-        id="origen"
-        type="text"
-        placeholder="Ej. Tocumen"
-      >
+<input
+  id="origen"
+  type="text"
+  list="lugaresGuardados"
+  autocomplete="off"
+  placeholder="Ej. Tocumen"
+>
 
-      <label for="recogida">¿Dónde recoges la carga?</label>
-      <input
-        id="recogida"
-        type="text"
-        placeholder="Ej. Condado del Rey"
-      >
+<label for="recogida">¿Dónde recoges la carga?</label>
+<input
+  id="recogida"
+  type="text"
+  list="lugaresGuardados"
+  autocomplete="off"
+  placeholder="Ej. Condado del Rey"
+>
 
-      <label for="destino">¿Dónde entregas?</label>
-      <input
-        id="destino"
-        type="text"
-        placeholder="Ej. Paitilla"
-      >
+<label for="destino">¿Dónde entregas?</label>
+<input
+  id="destino"
+  type="text"
+  list="lugaresGuardados"
+  autocomplete="off"
+  placeholder="Ej. Paitilla"
+>
+
+<datalist id="lugaresGuardados"></datalist>
 
       <label for="regreso">¿Regresas al punto de salida?</label>
       <select id="regreso">
@@ -361,7 +369,42 @@
 
 
   <script>
+// MEMORIA DE LUGARES
+const camposLugares = ["origen", "recogida", "destino"];
+const listaLugares = document.getElementById("lugaresGuardados");
 
+function cargarLugaresGuardados() {
+  const lugares = JSON.parse(localStorage.getItem("lugaresAcarreos") || "[]");
+
+  listaLugares.innerHTML = "";
+
+  lugares.forEach(lugar => {
+    const opcion = document.createElement("option");
+    opcion.value = lugar;
+    listaLugares.appendChild(opcion);
+  });
+}
+
+function guardarLugar(valor) {
+  valor = valor.trim();
+  if (!valor) return;
+
+  let lugares = JSON.parse(localStorage.getItem("lugaresAcarreos") || "[]");
+
+  if (!lugares.some(lugar => lugar.toLowerCase() === valor.toLowerCase())) {
+    lugares.push(valor);
+    localStorage.setItem("lugaresAcarreos", JSON.stringify(lugares));
+    cargarLugaresGuardados();
+  }
+}
+
+camposLugares.forEach(id => {
+  document.getElementById(id).addEventListener("change", function () {
+    guardarLugar(this.value);
+  });
+});
+
+cargarLugaresGuardados();
     function calcularAcarreo() {
 
   const kilometros =
