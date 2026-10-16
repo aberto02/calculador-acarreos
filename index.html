@@ -406,7 +406,13 @@ camposLugares.forEach(id => {
 
 cargarLugaresGuardados();
     function calcularAcarreo() {
+const kmIngresados = parseFloat(document.getElementById("kilometros").value);
+const tiempoIngresado = parseFloat(document.getElementById("tiempo").value);
 
+if (!kmIngresados || kmIngresados <= 0 || !tiempoIngresado || tiempoIngresado <= 0) {
+  alert("⚠️ Debes ingresar los kilómetros totales y el tiempo total para calcular correctamente.");
+  return;
+}
   const kilometros =
     parseFloat(document.getElementById("kilometros").value) || 0;
 
