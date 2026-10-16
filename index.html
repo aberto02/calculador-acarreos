@@ -517,13 +517,13 @@ document.getElementById("gananciaHora").textContent =
 // EVALUAR EL ACARREO
 let evaluacion = "";
 
-if (gananciaHora >= 25) {
+if (gananciaHora >= 25 && ganancia >= 30) {
   evaluacion = "🟢 Excelente negocio";
-} else if (gananciaHora >= 18) {
+} else if (gananciaHora >= 18 && ganancia >= 20) {
   evaluacion = "🟢 Buen negocio";
-} else if (gananciaHora >= 12) {
+} else if (gananciaHora >= 12 && ganancia >= 15) {
   evaluacion = "🟡 Aceptable";
-} else if (gananciaHora >= 8) {
+} else if (gananciaHora >= 8 && ganancia >= 10) {
   evaluacion = "🟠 Ganancia baja";
 } else {
   evaluacion = "🔴 Poco rentable";
